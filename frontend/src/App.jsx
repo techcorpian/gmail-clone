@@ -1,29 +1,44 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SideDrawer from './view/shared/UIElements/SideDrawer';
-import TopMenu from './view/shared/UIElements/TopMenu';
-import RightMenu from './view/shared/UIElements/RightMenu';
-import Starred from './view/starred/pages/Starred';
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './view/shared/UIElements/MainLayout';
+import Home from './view/Home';
 import { DrawerProvider } from './view/context/DrawerContext';
-import Inbox from './view/inbox/pages/Inbox'; // Import the Inbox component
+import NotFoundPage from './view/shared/pages/NotFoundPage';
+import ProtectedRoute from './view/auth/ProtectedRoute';
+import Login from './view/auth/Login';
+import Register from './view/auth/Register';
+import Inbox from './view/inbox/pages/Inbox';
+import Starred from './view/starred/pages/Starred';
+
+import RegisterStep1 from './view/auth/RegisterStep1';
+import RegisterStep2 from './view/auth/RegisterStep2';
+import RegisterStep3 from './view/auth/RegisterStep3';
+import RegisterSuccess from './view/auth/RegisterSuccess';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <DrawerProvider>
-        <div className='h-screen flex flex-col'>
-          <TopMenu />
-          <div className="flex flex-grow">
-            <SideDrawer />
-            <div className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Inbox />} /> 
-                <Route path="/starred" element={<Starred />} />
-              </Routes>
-            </div>
-            <RightMenu />
-          </div>
-        </div>
+        <Routes>
+          {/* Main layout routes */}
+          <Route path="login" element={<Login />} />
+          {/* <Route path="register" element={<Register />} /> */}
+          <Route path="/register" element={<RegisterStep1 />} />
+          <Route path="/step2" element={<RegisterStep2 />} />
+          <Route path="/step3" element={<RegisterStep3 />} />
+          <Route path="/success" element={<RegisterSuccess />} /> {/* Optional Success Page */}
+
+          {/* Sub-layout for protected routes */}
+          <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+            <Route index element={<Inbox />} />  {/* Default to Inbox */}
+            <Route path="starred" element={<Starred />} />
+          </Route>
+
+          {/* Catch-all route for undefined paths */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </DrawerProvider>
     </Router>
   );

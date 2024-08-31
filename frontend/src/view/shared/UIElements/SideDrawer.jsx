@@ -34,10 +34,10 @@ const SideDrawer = () => {
 
     const location = useLocation();
     return (
-        <div className={`flex flex-col ${isManualOpen ? "" : "fixed"}`}>
+        <div className={`flex z-20 flex-col ${isManualOpen ? "" : "fixed"}`}>
             
             <div
-                className={`flex flex-col ${isOpen ? "w-64" : "w-[4.8rem]"} bg-[#f6f8fd] h-screen transition-all overflow-hidden`}
+                className={`flex flex-col ${isOpen ? "w-64" : "w-[4.8rem]"} bg-[#f6f8fd] transition-all overflow-hidden`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >

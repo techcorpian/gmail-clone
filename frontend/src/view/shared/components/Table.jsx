@@ -1,0 +1,96 @@
+import React, { useState, useContext } from "react";
+import { DrawerContext } from "../../context/DrawerContext";
+import { IoMdRefresh } from "react-icons/io";
+import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
+import { MdOutlineArrowDropDown, MdOutlineStarOutline, MdOutlineStarPurple500 } from "react-icons/md";
+
+import { FiClock } from "react-icons/fi";
+import { LuMailOpen } from "react-icons/lu";
+import { BiArchiveIn } from "react-icons/bi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
+
+
+
+const Table = ({emails, setEmails}) => {
+    const { isManualOpen } = useContext(DrawerContext);
+    const [desktopOpenSubMenu, setDesktopOpenSubMenu] = useState(null);
+    const [hoveredRowIndex, setHoveredRowIndex] = useState(null); // State to track hovered row index
+
+    const toggleDesktopSubMenu = (index) => {
+        if (desktopOpenSubMenu === index) {
+            setDesktopOpenSubMenu(null);
+        } else {
+            setDesktopOpenSubMenu(index);
+        }
+    };
+
+    const handleCheckboxChange = (index) => {
+        const newEmails = [...emails];
+        newEmails[index].checked = !newEmails[index].checked;
+        setEmails(newEmails);
+    };
+
+    return (
+        <div
+            className={`flex flex-col h-full ${isManualOpen ? "ml-0" : "ml-20"
+                }`}
+        >
+            <div className="py-4 bg-white rounded-3xl flex-grow ">
+                <div className="flex justify-between px-4">
+                    <div className="flex gap-4 text-lg">
+                        <div className="flex gap-1">
+                            <input type="checkbox" className="" />
+                            <MdOutlineArrowDropDown onClick={() => toggleDesktopSubMenu(1)} className={`transition-transform ${desktopOpenSubMenu === 1 ? 'rotate-180' : 'rotate-0'}`} />
+                        </div>
+                        <IoMdRefresh />
+                        <PiDotsThreeOutlineVerticalFill />
+                    </div>
+                </div>
+
+                <table className="w-full mt-3">
+                    <tbody>
+                        {emails.map((email, index) => (
+                            <tr
+                                className="relative border-b border-gray-200 group cursor-pointer hover:border hover:border-b-2 hover:border-gray-300"
+                                key={index}
+                                onMouseEnter={() => setHoveredRowIndex(index)}
+                                onMouseLeave={() => setHoveredRowIndex(null)}
+                            >
+                                <td className={`text-2xl w-6 pb-2 pl-4 pr-3`}><input type="checkbox" /></td>
+                                <td className="text-base w-8 py-2">
+                                    <div className="star-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            id={`star${index}`}
+                                            checked={email.checked}
+                                            onChange={() => handleCheckboxChange(index)}
+                                        />
+                                        <label htmlFor={`star${index}`}>
+                                            {email.checked ? <MdOutlineStarPurple500 /> : <MdOutlineStarOutline />}
+                                        </label>
+                                    </div>
+                                </td>
+                                <td className="text-base pr-6 font-semibold py-2">{email.title}</td>
+                                <td className="text-base px-6 font-semibold py-2">
+                                    {email.subject}
+                                    <span className="text-gray-500 font-normal"> - {email.description}</span>
+                                </td>
+                                <td className="float-right text-sm font-semibold py-2 pr-4">{email.date}</td>
+                                {/* Overlay icon */}
+                                <td className="absolute flex items-center gap-5 top-1/2 right-1 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 bg-white p-2 transition-opacity">
+                                    <BiArchiveIn className="text-black text-lg"/>
+                                    <RiDeleteBin6Line className="text-black text-lg"/>
+                                    <LuMailOpen className="text-black text-lg"/>
+                                    <FiClock className="text-black text-lg" />  
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    );
+};
+
+export default Table;
