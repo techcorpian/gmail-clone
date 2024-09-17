@@ -16,7 +16,7 @@ const TopMenu = () => {
   };
 
   const currentUser = AuthService.getCurrentUser();
-  const initial = currentUser.username.charAt(0).toUpperCase();
+  const initial = currentUser.firstname.charAt(0).toUpperCase();
   console.log(currentUser);
 
 
@@ -43,7 +43,7 @@ const TopMenu = () => {
 
         {/* Conditionally rendered dropdown */}
         {isDropdownOpen && (
-          <div className="flex flex-col gap-6 p-4 justify-center items-center absolute right-0 mt-2 w-[400px] rounded-3xl shadow-lg bg-cyan-200 ring-1 ring-black ring-opacity-5 z-10">
+          <div className="flex flex-col gap-6 p-4 z-20 justify-center items-center absolute right-0 mt-2 w-[400px] rounded-3xl shadow-lg bg-cyan-200 ring-1 ring-black ring-opacity-5 z-10">
             <div className="text-sm">{currentUser.email}</div>
             <div className="flex flex-col justify-center items-center gap-2">
               <button
@@ -52,7 +52,7 @@ const TopMenu = () => {
               >
                 <div className="text-5xl font-medium pb-1">{initial}</div>
               </button>
-              <div className="text-2xl">Hi, {currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1)}!</div>
+              <div className="text-2xl">Hi, {currentUser.firstname.charAt(0).toUpperCase() + currentUser.firstname.slice(1)}!</div>
               <button className="border border-gray-500 rounded-full text-sm p-2 px-6 text-blue-800 font-semibold">Manage Your Google Account</button>
             </div>
             <div className="flex flex-col p-3 bg-white rounded-3xl w-full">
@@ -64,7 +64,7 @@ const TopMenu = () => {
                   <div className="text-lg font-medium">{initial}</div>
                 </button>
                 <div>
-                  <div>{currentUser.username}</div>
+                  <div>{currentUser.firstname}</div>
                   <div className="text-sm">{currentUser.email}</div>
                 </div>
               </div>
@@ -76,7 +76,7 @@ const TopMenu = () => {
                   <div className="text-lg font-medium">{initial}</div>
                 </button>
                 <div>
-                  <div>{currentUser.username}</div>
+                  <div>{currentUser.firstname}</div>
                   <div className="text-sm">{currentUser.email}</div>
                 </div>
               </div>

@@ -14,15 +14,18 @@ const RegisterStep1 = () => {
             navigate('/step2', { state: { firstname, lastname } });
             setFirstname(firstname);
             setLastname(lastname)
+        }else{
+            const error = "Enter The Details";
         }
     };
 
     return (
         <Slider>
-            <div key="step1" className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+            <div key="step1" className="flex flex-col justify-center items-center min-h-screen bg-gray-100 ">
                 <AuthLayout handleNext={handleNext} header='Create a Google Account' content='Enter Your Name'>
                     <CustomInput id='firstname' type='text' label='First Name' value={firstname} setValue={setFirstname} />
                     <CustomInput id='lastname' type='text' label='Last Name (optional)' value={lastname} setValue={setLastname} />
+                    <label className={`hidden ${firstname ? 'hidden' : 'block text-red-300'}`}>asdsadsadsadasdsad</label>
                 </AuthLayout>
             </div>
         </Slider>

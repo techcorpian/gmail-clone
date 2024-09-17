@@ -1,8 +1,12 @@
 import express from 'express';
-const router = express.Router();
-import { getInbox } from '../controllers/InboxController.js';
+import { InboxController } from '../controllers/InboxController.js';
 
-// Get all Todos
-router.get('/get', getInbox);
+const router = express.Router();
+
+// Route to get all messages from the inbox
+router.get('/get/:id', InboxController.getInbox);
+router.get('/view/:id', InboxController.viewInbox);
+
+router.post('/send', InboxController.insertInbox);
 
 export default router;

@@ -2,12 +2,12 @@ import axios from 'axios';
 // const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 const API_URL = `http://localhost:5000/auth/`;
 
-const register = (username, password) => {
-  return axios.post(API_URL + 'register', { username, password });
+const register = (email, password) => {
+  return axios.post(API_URL + 'register', { email, password });
 };
 
-const login = (username, password) => {
-  return axios.post(API_URL + 'login', { username, password }).then(response => {
+const login = (email, password) => {
+  return axios.post(API_URL + 'login', { email, password }).then(response => {
     if (response.data.accessToken) {
       console.log(response.data)
       localStorage.setItem('user', JSON.stringify(response.data));

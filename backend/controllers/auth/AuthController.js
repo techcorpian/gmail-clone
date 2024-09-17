@@ -3,29 +3,29 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { firstname, lastname, gender, month, day, year, email, password } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ firstname });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({ firstname, lastname, gender, month, day, year, email, password: hashedPassword });
 
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ err });
   }
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'User does not exist' });
     }
@@ -41,7 +41,8 @@ export const login = async (req, res) => {
 
     res.status(200).send({
       id: user.__vid,
-      username: user.username,
+      firstname: user.firstname,
+      lastname: user.lastname,
       email: user.email,
       accessToken: token
     });

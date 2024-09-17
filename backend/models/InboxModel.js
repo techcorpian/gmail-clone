@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const InboxSchema = new mongoose.Schema({
+const MessageSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -9,14 +9,22 @@ const InboxSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
+  message: {
+    type: String,
+    required: true
+  },
+  toAddress: {
+    type: String,
+    required: true
+  },
+  fromAddress: {
     type: String,
     required: true
   },
   date: {
-    type: String,
-    default: false
+    type: Date,
+    default: Date.now
   }
 });
 
-export default mongoose.model('Message', InboxSchema);
+export default mongoose.model('Message', MessageSchema);

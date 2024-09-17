@@ -9,12 +9,19 @@ import ProtectedRoute from './view/auth/ProtectedRoute';
 import Login from './view/auth/Login';
 import Register from './view/auth/Register';
 import Inbox from './view/inbox/pages/Inbox';
+import InboxView from './view/inbox/pages/InboxView';
 import Starred from './view/starred/pages/Starred';
+import Sent from './view/sent/pages/Sent';
+import Drafts from './view/drafts/pages/Drafts';
+
 
 import RegisterStep1 from './view/auth/RegisterStep1';
 import RegisterStep2 from './view/auth/RegisterStep2';
 import RegisterStep3 from './view/auth/RegisterStep3';
+import RegisterStep4 from './view/auth/RegisterStep4';
 import RegisterSuccess from './view/auth/RegisterSuccess';
+
+import PasswordLogin from './view/auth/PasswordLogin'
 import './App.css';
 
 function App() {
@@ -24,16 +31,20 @@ function App() {
         <Routes>
           {/* Main layout routes */}
           <Route path="login" element={<Login />} />
-          {/* <Route path="register" element={<Register />} /> */}
+          <Route path="password" element={<PasswordLogin />} />
           <Route path="/register" element={<RegisterStep1 />} />
           <Route path="/step2" element={<RegisterStep2 />} />
           <Route path="/step3" element={<RegisterStep3 />} />
+          <Route path="/step4" element={<RegisterStep4 />} />
           <Route path="/success" element={<RegisterSuccess />} /> {/* Optional Success Page */}
 
           {/* Sub-layout for protected routes */}
           <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
             <Route index element={<Inbox />} />  {/* Default to Inbox */}
             <Route path="starred" element={<Starred />} />
+            <Route path="sent" element={<Sent />} />
+            <Route path="drafts" element={<Drafts />} />
+            <Route path="inboxview/:id" element={<InboxView />} />
           </Route>
 
           {/* Catch-all route for undefined paths */}

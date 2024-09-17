@@ -6,13 +6,12 @@ import SideDrawer from './SideDrawer';
 import RightMenu from './RightMenu';
 
 const MainLayout = () => {
-
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col overflow-hidden pb-4">
       <TopMenu />
-      <div className="flex flex-grow">
+      <div className="flex h-full overflow-hidden">
         <SideDrawer />
-        <div className="flex-grow">
+        <div className="flex-grow overflow-auto">
           <Outlet />
         </div>
         <RightMenu />

@@ -1,42 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import CustomInput from '../shared/components/CustomInput';
+import AuthLayout from '../shared/UIElements/AuthLayout';
 import Slider from '../shared/UIElements/Slider';
 
 const RegisterStep3 = () => {
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const { firstname, lastname, gender, month, day, year } = location.state || {};
 
-    const handleFinish = () => {
-        if (name) {
-            console.log('First Name:', firstname);
-            console.log('Last Name:', lastname);
-            console.log('Gender:', gender);
-            console.log('Name:', name);
-            navigate('/success');
+    const handleNext = () => {
+        if (email) {
+            navigate('/step4', { state: { firstname, lastname, gender, month, day, year, email } });
+            setEmail(email);
         }
     };
 
     return (
         <Slider>
-            <div key="step3" className="flex justify-center items-center min-h-screen bg-gray-100">
-                <div className="w-full max-w-sm p-8 bg-white rounded shadow">
-                    <h2 className="text-2xl font-semibold text-center mb-4">Step 3: Enter Name</h2>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="block w-full px-4 py-2 mb-4 border border-gray-300 rounded"
-                        placeholder="Name"
-                    />
-                    <button
-                        onClick={handleFinish}
-                        className="block w-full py-2 px-4 bg-blue-500 text-white rounded"
-                    >
-                        Finish
-                    </button>
-                </div>
+            <div key="step3" className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+                <AuthLayout handleNext={handleNext} header='Choose your Gmail address' content='Pick a Gmail address or create your own'>
+                    {/* <CustomInput id='firstname' type='text' label='First Name' value={firstname} setValue={setFirstname} />
+                    <CustomInput id='lastname' type='text' label='Last Name (optional)' value={lastname} setValue={setLastname} /> */}
+                    <div className='flex gap-4 text-xl items-center'>
+                        <input type='radio' className='w-5 h-5' checked/> {/* Adjust the width and height */}
+                        <span>Create your own Gmail address</span>
+                    </div>
+                    <hr className='border border-gray-300'/>
+                    <CustomInput id='email' type='email' label='Create a Gmail address' value={email} setValue={setEmail} />
+                </AuthLayout>
             </div>
         </Slider>
     );
